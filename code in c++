@@ -1,0 +1,108 @@
+#include<iostream>
+using namespace std;
+struct date
+{
+  int day,month,year;  
+};
+int leapyear(int year)
+{
+    if((year%4==0&&
+        !year%100==0)||
+        year%400==0)
+        {
+            return 1;
+        }
+    else
+    {
+        return 0;
+    }
+}
+
+int daysinmonth(int month,int year)
+{
+    if(month==2)
+    {
+        return 28+leapyear(year);
+    }
+    else if (month==4||
+            month==6||
+            month==9||
+            month==11)
+        {
+            return 30;
+        }
+    else 
+    {
+        return 31;
+    }
+}
+int calculatediffernce(date d1,date d2)
+{
+   
+    if(d1.month<1||d1.month>12||
+       d2.month<1||d2.month>12)
+       {
+           return -1; 
+       }
+    if(d1.day<1||d1.day>daysinmonth(d1.month,d1.year)||
+        d2.day<1||d2.day>daysinmonth(d2.month,d2.year))
+        {
+            return -1;
+        }
+        
+    
+    int days1=0,days2=0;
+    for(int year=1;year<d1.year;year++)
+    {
+        days1 +=365+leapyear(year);
+    }
+    for(int month=1;month<d1.month;month++)
+    {
+        days1+=daysinmonth(month,d1.year);
+    }
+    days1+=d1.day;
+    
+   
+    for(int year=1;year<d2.year;year++)
+    {
+        days2+=365+leapyear(year);
+    }
+    for(int month=1;month<d2.month;month++)
+    {
+        days2+=daysinmonth(month,d2.year);
+    }
+    days2+=d2.day;
+    
+    
+    return abs(days1-days2);
+}
+
+int main()
+{
+    date d1, d2;
+    cout<<"ENTER THE FIRST DATE IN ORDER DD/MM/YYYY:"<<endl<<"WHERE DD=";
+    cin>>d1.day;
+    cout<<"WHERE MM=";
+    cin>>d1.month;
+    cout<<"WHERE YYYY=";
+    cin>>d1.year;
+    cout<<"THEREFORE THE FIRST DATE IS "<<d1.day<<"/"<<d1.month<<"/"<<d1.year<<endl;
+    cout<<"ENTER THE SECOND DATE IN ORDER DD/MM/YYYY:"<<endl<<"WHERE DD=";
+    cin>>d2.day;
+    cout<<"WHERE MM=";
+    cin>>d2.month;
+    cout<<"WHERE YYYY=";
+    cin>>d2.year;
+    cout<<"THEREFORE THE SECOND DATE IS "<<d2.day<<"/"<<d2.month<<"/"<<d2.year<<endl;
+    
+    int difference=calculatediffernce(d1,d2);
+    if(difference==-1)
+    {
+        cout<<"INVALID DATE(s)";
+    }
+    else
+    {
+        cout<<"DIFFERENCE BETWEEN DATES ARE: "<<difference<<" DAYS";
+    }
+    return 0;
+}
